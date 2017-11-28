@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Data.Sqlite;
 using Microsoft.Data.Sqlite.Internal;
+using MyFavoriteWeb.Models;
 
 namespace MyFavoriteWeb
 {
@@ -23,21 +24,26 @@ namespace MyFavoriteWeb
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
-            SqliteEngine.UseWinSqlite3(); //Configuring library to use SDK version of SQLite
-            using (SqliteConnection db = new SqliteConnection("Filename=MyFavoriteWebDB.db"))
+            using (var db = new MyAppContext())
             {
-                db.Open();
-                string tb = "CREATE TABLE IF NOT EXISTS Usuarios (Id INTEGER PRIMARY KEY AUTOINCREMENT, Nome NVARCHAR(255) NOT NULL, Email NVARCHAR(255) NOT NULL, Senha NVARCHAR(255) NOT NULL)";
-                SqliteCommand createTable = new SqliteCommand(tb, db);
-                try
-                {
-                    createTable.ExecuteReader();
-                }
-                catch (SqliteException e)
-                {
-                    //Do nothing
-                }
+                db.Database.EnsureCreated();
             }
+
+            //SqliteEngine.UseWinSqlite3(); //Configuring library to use SDK version of SQLite
+            //using (SqliteConnection db = new SqliteConnection("Filename=MyFavoriteWeb.db"))
+            //{
+            //    db.Open();
+            //    string tb = "CREATE TABLE IF NOT EXISTS Usuarios (Id NVARCHAR(255) PRIMARY KEY, Nome NVARCHAR(255) NOT NULL, Email NVARCHAR(255) NOT NULL, Senha NVARCHAR(255) NOT NULL)";
+            //    SqliteCommand createTable = new SqliteCommand(tb, db);
+            //    try
+            //    {
+            //        createTable.ExecuteReader();
+            //    }
+            //    catch (SqliteException e)
+            //    {
+            //        //Do nothing
+            //    }
+            //}
         }
 
         /// <summary>
