@@ -1,12 +1,10 @@
 ﻿using System;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using Microsoft.Data.Sqlite;
-using Microsoft.Data.Sqlite.Internal;
 using MyFavoriteWeb.Models;
+using Windows.UI.Xaml.Controls;
+using Windows.ApplicationModel;
+using Windows.UI.Xaml.Navigation;
+using Windows.ApplicationModel.Activation;
 
 namespace MyFavoriteWeb
 {
@@ -21,29 +19,13 @@ namespace MyFavoriteWeb
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
 
             using (var db = new MyAppContext())
             {
                 db.Database.EnsureCreated();
             }
-
-            //SqliteEngine.UseWinSqlite3(); //Configuring library to use SDK version of SQLite
-            //using (SqliteConnection db = new SqliteConnection("Filename=MyFavoriteWeb.db"))
-            //{
-            //    db.Open();
-            //    string tb = "CREATE TABLE IF NOT EXISTS Usuarios (Id NVARCHAR(255) PRIMARY KEY, Nome NVARCHAR(255) NOT NULL, Email NVARCHAR(255) NOT NULL, Senha NVARCHAR(255) NOT NULL)";
-            //    SqliteCommand createTable = new SqliteCommand(tb, db);
-            //    try
-            //    {
-            //        createTable.ExecuteReader();
-            //    }
-            //    catch (SqliteException e)
-            //    {
-            //        //Do nothing
-            //    }
-            //}
         }
 
         /// <summary>

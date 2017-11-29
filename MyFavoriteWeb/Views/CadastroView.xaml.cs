@@ -1,12 +1,11 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using Windows.Foundation;
+using MyFavoriteWeb.Models;
 using Windows.Media.Capture;
 using MyFavoriteWeb.Services;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
-using MyFavoriteWeb.Models;
-using Windows.UI.Notifications;
 
 namespace MyFavoriteWeb.Views
 {
@@ -24,7 +23,7 @@ namespace MyFavoriteWeb.Views
 
         private async void OpenCamera(object sender, RoutedEventArgs e)
         {
-            CameraCaptureUI captureUI = new CameraCaptureUI();
+            var captureUI = new CameraCaptureUI();
             captureUI.PhotoSettings.AllowCropping = true;
             captureUI.PhotoSettings.CroppedSizeInPixels = new Size(300, 300);
             captureUI.PhotoSettings.Format = CameraCaptureUIPhotoFormat.Jpeg;
@@ -48,8 +47,8 @@ namespace MyFavoriteWeb.Views
 
         private void imgFoto_ImageFailed(object sender, ExceptionRoutedEventArgs e)
         {
-            Image img = sender as Image;
-            BitmapImage fallbackImage = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.png"));
+            var img = sender as Image;
+            var fallbackImage = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.png"));
             img.Width = 100;
             img.Source = fallbackImage;
         }
@@ -71,28 +70,14 @@ namespace MyFavoriteWeb.Views
                     context.SaveChanges();
                 }
 
-                ShowToastNotification("Sucesso", "O cadastro foi realizado com sucesso.");
+                NotificationService.ShowToastNotification("Sucesso", "O cadastro foi realizado com sucesso.");
             }
             catch (Exception ex)
             {
-                throw;
+                NotificationService.ShowToastNotification("Erro", ex.Message);
             }
         }
 
-        private void ShowToastNotification(string title, string stringContent)
-        {
-            ToastNotifier ToastNotifier = ToastNotificationManager.CreateToastNotifier();
-            Windows.Data.Xml.Dom.XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
-            Windows.Data.Xml.Dom.XmlNodeList toastNodeList = toastXml.GetElementsByTagName("text");
-            toastNodeList.Item(0).AppendChild(toastXml.CreateTextNode(title));
-            toastNodeList.Item(1).AppendChild(toastXml.CreateTextNode(stringContent));
-            Windows.Data.Xml.Dom.IXmlNode toastNode = toastXml.SelectSingleNode("/toast");
-            Windows.Data.Xml.Dom.XmlElement audio = toastXml.CreateElement("audio");
-            audio.SetAttribute("src", "ms-winsoundevent:Notification.SMS");
-
-            ToastNotification toast = new ToastNotification(toastXml);
-            toast.ExpirationTime = DateTime.Now.AddSeconds(4);
-            ToastNotifier.Show(toast);
-        }
+        
     }
 }

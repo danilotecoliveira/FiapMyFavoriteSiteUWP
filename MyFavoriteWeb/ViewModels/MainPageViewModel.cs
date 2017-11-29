@@ -1,5 +1,4 @@
 ﻿using MyFavoriteWeb.Abstracts;
-using System.Threading.Tasks;
 
 namespace MyFavoriteWeb.ViewModels
 {

@@ -1,7 +1,6 @@
 ﻿using System;
-using Windows.UI.Popups;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 
 namespace MyFavoriteWeb.Views
@@ -11,19 +10,6 @@ namespace MyFavoriteWeb.Views
         public NavegadorWebView()
         {
             InitializeComponent();
-            //webView.ContainsFullScreenElementChanged += (WebView sender, object args) =>
-            //{
-            //    var applicationView = ApplicationView.GetForCurrentView();
-
-            //    if (sender.ContainsFullScreenElement)
-            //    {
-            //        applicationView.TryEnterFullScreenMode();
-            //    }
-            //    else if (applicationView.IsFullScreenMode)
-            //    {
-            //        applicationView.ExitFullScreenMode();
-            //    }
-            //};
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -37,11 +23,11 @@ namespace MyFavoriteWeb.Views
             await msg.ShowAsync();
         }
 
-        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             double remainingWidth = Window.Current.Bounds.Width;
-            webView.Width = remainingWidth;
-            webView.Height = e.NewSize.Height;
+            webView.Width = remainingWidth - 48;
+            webView.Height = Window.Current.Bounds.Height;
         }
     }
 }
