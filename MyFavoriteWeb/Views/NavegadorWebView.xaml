@@ -8,13 +8,13 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="Grid_Loaded">
-        <StackPanel Padding="10">
+        <StackPanel Padding="5">
             <StackPanel Orientation="Horizontal">
-                <TextBox x:Name="site" Width="400" HorizontalAlignment="Stretch"></TextBox>
-                <Button Click="Button_Click" Margin="5, 0, 0, 0" Width="46" Height="46">Ir</Button>
+                <TextBox x:Name="site" Width="200" Height="30" HorizontalAlignment="Stretch"></TextBox>
+                <Button Click="Button_Click" Margin="5, 0, 0, 0" Width="46" Height="30">Ir</Button>
                 <!--<Button Click="Button_Click_1">Salvar Página</Button>-->
-                <Button Background="Transparent" Height="60" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0" BorderThickness="0" Margin="20, -10, 0, 0">
-                    <Image Source="ms-appx:///Assets/favorite.png" Width="50" Stretch="UniformToFill"></Image>
+                <Button Background="Transparent" Height="60" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0" BorderThickness="0" Margin="5, 0, 0, 0">
+                    <Image Source="ms-appx:///Assets/favorite.png" Width="42" Stretch="UniformToFill" Margin="0,0,0,10"></Image>
                 </Button>
             </StackPanel>
 

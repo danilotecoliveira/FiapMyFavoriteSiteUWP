@@ -12,66 +12,84 @@
         <converter:TypeToObjectConverter x:Key="TypeToObjectConverter" />
     </Page.Resources>-->
 
-    <SplitView Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
-        IsPaneOpen="{x:Bind ViewModel.IsSplitViewOpen, Mode=TwoWay}"
-        OpenPaneLength="220" DisplayMode="CompactOverlay" CompactPaneLength="44">
-        <SplitView.Pane>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" MaxHeight="640" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+    <Grid>
+        <!-- Divisão da página em duas linhas (topo e restante da tela) -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <!-- Definição do topo -->
 
-                <Button Width="44" Height="44" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Background="Transparent" Click="{x:Bind ViewModel.HamburguerButton_Click}" />
+        <StackPanel Height="50" Background="SkyBlue" Orientation="Horizontal">
+            <Button x:Name="btnHamburger" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" Background="Transparent" Grid.Row="0" Click="btnHamburger_Click" />
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Foreground="White" Height="35" VerticalAlignment="Center" Text="My Favorite Web" Margin="10, 0, 0, 0" />
+        </StackPanel>
 
-                <ScrollViewer Grid.Row="1">
-                    <StackPanel Orientation="Vertical" Grid.Row="2" Margin="0,0,0,48">
-                        <Button Background="Transparent" Click="WebView_Click">
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Symbol="PreviewLink" Height="24" Width="24" Margin="0,0,12,0"/>
-                                    <TextBlock Text="Navegador" />
-                                </StackPanel>
-                            </Button.Content>
-                        </Button>
+        <SplitView x:Name="splitt"></SplitView>
 
-                        <Button Background="Transparent" Click="ListaSites_Click">
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Symbol="OutlineStar" Height="24" Width="24" Margin="0,0,12,0"/>
-                                    <TextBlock Text="Meus Sites" />
-                                </StackPanel>
-                            </Button.Content>
-                        </Button>
-
-                        <Button Background="Transparent" Click="Cadastro_Click">
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Symbol="ContactInfo" Height="24" Width="24" Margin="0,0,12,0"/>
-                                    <TextBlock Text="Meu Cadastro" />
-                                </StackPanel>
-                            </Button.Content>
-                        </Button>
-
-                        <Button Background="Transparent" Click="Sobre_Click">
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Symbol="Comment" Height="24" Width="24" Margin="0,0,12,0"/>
-                                    <TextBlock Text="Sobre" />
-                                </StackPanel>
-                            </Button.Content>
-                        </Button>
-
-                        <Button Background="Transparent" Click="Configuracao_Click">
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Symbol="Setting" Height="24" Width="24" Margin="0,0,12,0"/>
-                                    <TextBlock Text="Configurações" />
-                                </StackPanel>
-                            </Button.Content>
-                        </Button>
-
+        <!-- Definição do SplitView -->
+        <SplitView x:Name="splitView" DisplayMode="Overlay" IsPaneOpen="False" FlowDirection="LeftToRight" CompactPaneLength="50" OpenPaneLength="250" Grid.Row="1">
+            <!-- Painel de navegação -->
+            <SplitView.Pane>
+                <Grid Background="SkyBlue">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="1">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Background="Transparent" Click="WebView_Click">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <SymbolIcon Symbol="PreviewLink" Height="24" Width="24" Margin="0,0,12,0"/>
+                                        <TextBlock Text="Navegador" />
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Background="Transparent" Click="ListaSites_Click">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <SymbolIcon Symbol="OutlineStar" Height="24" Width="24" Margin="0,0,12,0"/>
+                                        <TextBlock Text="Meus Sites" />
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Background="Transparent" Click="Cadastro_Click">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <SymbolIcon Symbol="ContactInfo" Height="24" Width="24" Margin="0,0,12,0"/>
+                                        <TextBlock Text="Meu Cadastro" />
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Background="Transparent" Click="Sobre_Click">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <SymbolIcon Symbol="Comment" Height="24" Width="24" Margin="0,0,12,0"/>
+                                        <TextBlock Text="Sobre" />
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Background="Transparent" Click="Configuracao_Click">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <SymbolIcon Symbol="Setting" Height="24" Width="24" Margin="0,0,12,0"/>
+                                        <TextBlock Text="Configurações" />
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="2">
                         <Button Background="Transparent" Click="Sair_Click">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
@@ -81,14 +99,14 @@
                             </Button.Content>
                         </Button>
                     </StackPanel>
-                </ScrollViewer>
-            </Grid>
-        </SplitView.Pane>
-
-        <SplitView.Content>
-            <Grid>
-                <Frame x:Name="frameNavigation"></Frame>
-            </Grid>
-        </SplitView.Content>
-    </SplitView>
+                </Grid>
+            </SplitView.Pane>
+            <!-- Painel de conteúdo -->
+            <SplitView.Content>
+                <Grid Background="White">
+                    <Frame x:Name="frameNavigation"></Frame>
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
+    </Grid>
 </Page>
