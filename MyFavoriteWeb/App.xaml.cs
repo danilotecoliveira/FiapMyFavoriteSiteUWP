@@ -5,6 +5,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel;
 using Windows.UI.Xaml.Navigation;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 
 namespace MyFavoriteWeb
 {
@@ -25,6 +26,23 @@ namespace MyFavoriteWeb
             using (var db = new MyAppContext())
             {
                 db.Database.EnsureCreated();
+            }
+
+            ConfigurarTema();
+        }
+
+        private void ConfigurarTema()
+        {
+            var localSettings = ApplicationData.Current.LocalSettings;
+            if (localSettings.Values["appTema"] != null)
+            {
+                RequestedTheme = (localSettings.Values["appTema"].ToString() == "Light") 
+                    ? ApplicationTheme.Light 
+                    : ApplicationTheme.Dark;
+            }
+            else
+            {
+                RequestedTheme = ApplicationTheme.Light;
             }
         }
 

@@ -36,8 +36,8 @@
             <TextBox x:Name="Email" PlaceholderText="E-mail" Margin="0,10,0,0" InputScope="EmailNameOrAddress"></TextBox>
             <PasswordBox x:Name="Senha" PlaceholderText="Senha" Margin="0,10,0,0"></PasswordBox>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Width="150" Margin="0,10,10,0" Click="Cancel" Style="{StaticResource RedButton}">Cancelar</Button>
-                <Button Width="150" Margin="10,10,0,0" Click="Save" Style="{StaticResource BlueButton}">Salvar</Button>
+                <Button Width="150" Margin="0,10,10,0" Click="Cancel">Cancelar</Button>
+                <Button Width="150" Margin="10,10,0,0" Click="Save">Salvar</Button>
             </StackPanel>
         </StackPanel>
     </Grid>

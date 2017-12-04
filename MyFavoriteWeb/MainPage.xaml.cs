@@ -47,7 +47,7 @@ namespace MyFavoriteWeb
 
         private void Configuracao_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate<Views.SobreView>();
+            NavigationService.Navigate<Views.ConfiguracaoView>();
             splitView.IsPaneOpen = !splitView.IsPaneOpen;
         }
 

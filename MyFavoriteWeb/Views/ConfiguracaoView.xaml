@@ -1,0 +1,23 @@
+﻿<Page
+    x:Class="MyFavoriteWeb.Views.ConfiguracaoView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MyFavoriteWeb.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel>
+            <TextBlock HorizontalAlignment="Center" Margin="0, 40, 0, 0">Tema Ligth</TextBlock>
+            <Button Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0" BorderThickness="0" Click="Light_Click">
+                <Image Source="ms-appx:///Assets/theme-ligth.png" Height="250"></Image>
+            </Button>
+
+            <TextBlock HorizontalAlignment="Center" Margin="0, 40, 0, 0">Tema Dark</TextBlock>
+            <Button Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0" BorderThickness="0" Click="Dark_Click">
+                <Image Source="ms-appx:///Assets/theme-dark.png" Height="250"></Image>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Page>
