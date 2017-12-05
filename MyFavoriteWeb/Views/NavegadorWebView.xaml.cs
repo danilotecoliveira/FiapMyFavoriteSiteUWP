@@ -21,6 +21,11 @@ namespace MyFavoriteWeb.Views
         {
             MessageDialog msg = new MessageDialog($"A página {webView.Source} foi salva com sucesso!", "Página da web");
             await msg.ShowAsync();
+
+            var brush = new WebViewBrush();
+            brush.SetSource(webView);
+            brush.Redraw();
+            //myRect.Fill = brush;
         }
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
