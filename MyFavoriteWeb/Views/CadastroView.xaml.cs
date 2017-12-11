@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.Foundation;
 using MyFavoriteWeb.Models;
@@ -6,6 +7,7 @@ using Windows.Media.Capture;
 using MyFavoriteWeb.Services;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
+using MyFavoriteWeb.Models.Singletons;
 
 namespace MyFavoriteWeb.Views
 {
@@ -14,6 +16,13 @@ namespace MyFavoriteWeb.Views
         public CadastroView()
         {
             InitializeComponent();
+
+            if (!string.IsNullOrWhiteSpace(UsuarioLogado.Nome))
+            {
+                Nome.Text = UsuarioLogado.Nome;
+                Email.Text = UsuarioLogado.Email;
+                Senha.Password = UsuarioLogado.Senha;
+            }
         }
 
         private void Cancel(object sender, RoutedEventArgs e)
@@ -53,10 +62,12 @@ namespace MyFavoriteWeb.Views
             img.Source = fallbackImage;
         }
 
-        private void Save(object sender, RoutedEventArgs e)
+        protected void Save(object sender, RoutedEventArgs e)
         {
             try
             {
+                VerificarUsuarioExistente(Email.Text);
+
                 using (var context = new MyAppContext())
                 {
                     var usuario = new Usuario
@@ -71,6 +82,8 @@ namespace MyFavoriteWeb.Views
                 }
 
                 NotificationService.ShowToastNotification("Sucesso", "O cadastro foi realizado com sucesso.");
+
+                NavigationService.Navigate<Login>();
             }
             catch (Exception ex)
             {
@@ -78,6 +91,18 @@ namespace MyFavoriteWeb.Views
             }
         }
 
-        
+        private void VerificarUsuarioExistente(string email)
+        {
+            using (var context = new MyAppContext())
+            {
+                var usuario = context.Usuarios.Where(m => m.Email == email).FirstOrDefault();
+
+                if (usuario != null)
+                {
+                    context.Usuarios.Remove(usuario);
+                    context.SaveChanges();
+                }
+            }
+        }
     }
 }

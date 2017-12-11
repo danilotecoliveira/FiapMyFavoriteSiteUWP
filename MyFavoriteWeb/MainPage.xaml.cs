@@ -1,4 +1,5 @@
-﻿using MyFavoriteWeb.Services;
+﻿using MyFavoriteWeb.Models.Singletons;
+using MyFavoriteWeb.Services;
 using MyFavoriteWeb.ViewModels;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -53,6 +54,8 @@ namespace MyFavoriteWeb
 
         private void Sair_Click(object sender, RoutedEventArgs e)
         {
+            new UsuarioLogado(null);
+
             NavigationService.Frame = Window.Current.Content as Frame;
             NavigationService.Navigate(typeof(Login));
         }
