@@ -2,6 +2,14 @@
 {
     public sealed class UsuarioLogado
     {
+        private static int id;
+
+        public static int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
         private static string nome;
 
         public static string Nome
@@ -30,12 +38,14 @@
         {
             if (usuario == null)
             {
+                id = 0;
                 email = string.Empty;
                 nome = string.Empty;
                 senha = string.Empty;
             }
             else
             {
+                id = usuario.Id;
                 email = usuario.Email;
                 nome = usuario.Nome;
                 senha = usuario.Senha;

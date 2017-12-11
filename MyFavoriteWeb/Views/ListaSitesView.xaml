@@ -9,13 +9,15 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel>
-            <StackPanel>
-                <ListView>
-                    <ListView.Items>
-                        <TextBlock></TextBlock>
-                    </ListView.Items>
-                </ListView>
-            </StackPanel>
+            <ListView x:Name="listaSites">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Titulo}" ></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
     </Grid>
 </Page>
