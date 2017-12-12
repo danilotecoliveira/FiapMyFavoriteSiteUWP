@@ -1,6 +1,10 @@
 ﻿using System.Linq;
 using MyFavoriteWeb.Models;
 using Windows.UI.Xaml.Controls;
+using MyFavoriteWeb.Models.Singletons;
+using MyFavoriteWeb.Services;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml;
 
 namespace MyFavoriteWeb.Views
 {
@@ -16,6 +20,15 @@ namespace MyFavoriteWeb.Views
 
                 listaSites.ItemsSource = lista;
             }
+        }
+
+        private void listaSites_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var listView = (ListView)sender;
+            var url = ((FrameworkElement)e.OriginalSource).DataContext as Site;
+
+            WebViewUrl.Url = url.Url;
+            NavigationService.Navigate<NavegadorWebView>();
         }
     }
 }

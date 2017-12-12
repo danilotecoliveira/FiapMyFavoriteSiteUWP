@@ -12,6 +12,11 @@ namespace MyFavoriteWeb.Views
         public NavegadorWebView()
         {
             InitializeComponent();
+
+            if (!string.IsNullOrWhiteSpace(WebViewUrl.Url))
+            {
+                webView.Source = new Uri(WebViewUrl.Url);
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

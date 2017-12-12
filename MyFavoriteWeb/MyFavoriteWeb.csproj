@@ -109,6 +109,7 @@
     <Compile Include="Models\MyAppContext.cs" />
     <Compile Include="Models\NotificationItem.cs" />
     <Compile Include="Models\Singletons\UsuarioLogado.cs" />
+    <Compile Include="Models\Singletons\WebViewUrl.cs" />
     <Compile Include="Models\Site.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

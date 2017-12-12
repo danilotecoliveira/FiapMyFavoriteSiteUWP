@@ -9,11 +9,11 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel>
-            <ListView x:Name="listaSites">
+            <ListView x:Name="listaSites" Tapped="listaSites_Tapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <TextBlock Text="{Binding Titulo}" ></TextBlock>
+                            <TextBlock Text="{Binding Titulo}"></TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
