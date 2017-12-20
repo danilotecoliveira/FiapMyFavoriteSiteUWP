@@ -18,8 +18,8 @@
                 <Button Width="250" Margin="0,10,0,0" HorizontalAlignment="Center" Click="Button_Click">Entrar</Button>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <HyperlinkButton Margin="0,0,30,0" Click="HyperlinkButton_Click">Novo Cadastro</HyperlinkButton>
-                <HyperlinkButton Margin="30,0,0,0" Click="HyperlinkButton_Click_1">Sobre o App</HyperlinkButton>
+                <HyperlinkButton Margin="0,0,30,0" Click="{x:Bind ViewModel.NovoCadastro}">Novo Cadastro</HyperlinkButton>
+                <HyperlinkButton Margin="30,0,0,0" Click="{x:Bind ViewModel.Sobre}">Sobre o App</HyperlinkButton>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -18,7 +18,8 @@
                 </Button>
             </StackPanel>
 
-            <WebView x:Name="webView" Source="https://www.google.com.br/" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" />
+            <Rectangle x:Name="rectangle" Width="240" Height="360" Margin="-10000 0 0 0"></Rectangle>
+            <WebView x:Name="webView" Source="https://www.google.com.br/" Margin="0 -360 0 0" NavigationCompleted="webView_NavigationCompleted" />
         </StackPanel>
     </Grid>
 </Page>

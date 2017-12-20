@@ -5,15 +5,13 @@ using MyFavoriteWeb.Models;
 using Windows.UI.Xaml.Controls;
 using MyFavoriteWeb.Models.Singletons;
 using MyFavoriteWeb.Services;
+using System.Threading.Tasks;
+using Windows.UI.Xaml.Media;
+using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Shapes;
 using Windows.Graphics.Imaging;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.UI.Xaml.Shapes;
-using Windows.Storage;
-using Windows.Storage.Pickers;
-using System.Collections.Generic;
-using System.IO.IsolatedStorage;
-using System.Threading.Tasks;
 
 namespace MyFavoriteWeb.Views
 {
@@ -58,7 +56,7 @@ namespace MyFavoriteWeb.Views
                     context.SaveChanges();
                 }
 
-                await SaveImage();
+                Savetoimage();
 
                 MessageDialog msg = new MessageDialog($"A página salva com sucesso!", "Página da web");
                 await msg.ShowAsync();
@@ -70,51 +68,79 @@ namespace MyFavoriteWeb.Views
             }
         }
 
-        private async Task SaveImage()
-        {
-            var brush = new WebViewBrush();
-            brush.SetSource(webView);
-            brush.Redraw();
-
-            var myRect = new Rectangle();
-            myRect.Fill = brush;
-
-            //FileSavePicker fileSavePicker = new FileSavePicker();
-            //fileSavePicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-            //fileSavePicker.FileTypeChoices.Add("JPEG files", new List<string>() { ".jpg" });
-            //fileSavePicker.SuggestedFileName = "image";
-
-            //var outputFile = await fileSavePicker.PickSaveFileAsync();
-
-            //if (outputFile == null)
-            //{
-            //    // The user cancelled the picking operation
-            //    return;
-            //}
-
-            var piclib = KnownFolders.PicturesLibrary;
-            var rect = myRect as Rectangle;
-            RenderTargetBitmap renderbmp = new RenderTargetBitmap();
-            await renderbmp.RenderAsync(rect);
-            var pixels = await renderbmp.GetPixelsAsync();
-            var file = await piclib.CreateFileAsync("webview.png", CreationCollisionOption.GenerateUniqueName);
-            using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
-            {
-                BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
-                byte[] bytes = pixels.ToArray();
-                encoder.SetPixelData(BitmapPixelFormat.Bgra8,
-                                    BitmapAlphaMode.Ignore,
-                                    (uint)rect.Width, (uint)rect.Height,
-                                    0, 0, bytes);
-                await encoder.FlushAsync();
-            }
-        }
-
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             double remainingWidth = Window.Current.Bounds.Width;
             webView.Width = remainingWidth;
             webView.Height = Window.Current.Bounds.Height;
+        }
+
+        private async void webView_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+        {
+            rectangle.Fill = await GetWebViewBrush(webView);
+        }
+
+        private async Task<WebViewBrush> GetWebViewBrush(WebView webView)
+        {
+            // resize width to content
+            double originalWidth = webView.Width;
+            var widthString = await webView.InvokeScriptAsync("eval", new[] { "document.body.scrollWidth.toString()" });
+            int contentWidth;
+
+            if (!int.TryParse(widthString, out contentWidth))
+            {
+                throw new Exception(string.Format("failure/width:{0}", widthString));
+            }
+
+            webView.Width = contentWidth;
+
+            // resize height to content
+            double originalHeight = webView.Height;
+            var heightString = await webView.InvokeScriptAsync("eval", new[] { "document.body.scrollHeight.toString()" });
+            int contentHeight;
+
+            if (!int.TryParse(heightString, out contentHeight))
+            {
+                throw new Exception(string.Format("failure/height:{0}", heightString));
+            }
+
+            webView.Height = contentHeight;
+
+            // create brush
+            var originalVisibilty = webView.Visibility;
+            webView.Visibility = Visibility.Visible;
+
+            WebViewBrush brush = new WebViewBrush
+            {
+                SourceName = webView.Name,
+                Stretch = Stretch.Uniform
+            };
+
+            brush.Redraw();
+
+            // reset, return
+            webView.Width = originalWidth;
+            webView.Height = originalHeight;
+            webView.Visibility = originalVisibilty;
+
+            return brush;
+        }
+
+        private async void Savetoimage()
+        {
+            var piclib = KnownFolders.PicturesLibrary;
+            var rect = rectangle as Rectangle;
+            var renderbmp = new RenderTargetBitmap();
+            await renderbmp.RenderAsync(rect);
+            var pixels = await renderbmp.GetPixelsAsync();
+            var file = await piclib.CreateFileAsync("webview.bmp", CreationCollisionOption.GenerateUniqueName);
+            using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
+            {
+                var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, stream);
+                var bytes = pixels.ToArray();
+                encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, (uint)rect.Width, (uint)rect.Height, 0, 0, bytes);
+                await encoder.FlushAsync();
+            }
         }
     }
 }

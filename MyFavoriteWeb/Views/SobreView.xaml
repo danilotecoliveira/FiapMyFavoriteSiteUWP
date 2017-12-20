@@ -11,8 +11,8 @@
         <StackPanel VerticalAlignment="Center" Padding="15">
             <Image Source="ms-appx:///Assets/logo.png" Width="140" Margin="0,0,0,20"></Image>
             <TextBlock Text="My Favorite Web" HorizontalAlignment="Center"></TextBlock>
-            <TextBlock Text="O Palmares não tem mundial!" HorizontalAlignment="Center" Margin="0,10,0,0"></TextBlock>
-            <TextBlock Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,10,0,0"></TextBlock>
+            <TextBlock Text="O app para fazer a sua própria web!" HorizontalAlignment="Center" Margin="0,10,0,0"></TextBlock>
+            <TextBlock Text="Com o My Favorite Web você pode salvar todos os seus sites favoritos. Incluir, excluir, navegar entre seus sites favoritos fica bem mais fácil com o My Favorite Web. Isto sem falar das funções de personalização da aparência do seu App e ainda manter todo o seu conteúdo protegido por login e senha." TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,10,0,0"></TextBlock>
             <TextBlock Text="Integrantes" HorizontalAlignment="Center" Margin="0,10,0,0"></TextBlock>
             <TextBlock Text="38930 - Danilo de Oliveira" HorizontalAlignment="Center" Margin="0,10,0,0"></TextBlock>
             <TextBlock Text="45806 - Felipe Colacioppo de Moura Paiva" HorizontalAlignment="Center" Margin="0,5,0,0"></TextBlock>

@@ -1,17 +1,26 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Linq;
+using Windows.UI.Xaml;
+using MyFavoriteWeb.Models;
 using MyFavoriteWeb.Services;
 using Windows.UI.Xaml.Controls;
-using MyFavoriteWeb.Models;
-using System.Linq;
 using MyFavoriteWeb.Models.Singletons;
+using MyFavoriteWeb.ViewModels;
 
 namespace MyFavoriteWeb
 {
     public sealed partial class Login : Page
     {
+        public LoginViewModel ViewModel { get; } = new LoginViewModel();
+
         public Login()
         {
             InitializeComponent();
+            Loaded += Login_Loaded;
+        }
+
+        private void Login_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.Initialize();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -28,16 +37,6 @@ namespace MyFavoriteWeb
                     NavigationService.Navigate<MainPage>();
                 }
             }
-        }
-
-        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate<Views.CadastroView>();
-        }
-
-        private void HyperlinkButton_Click_1(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate<Views.SobreView>();
         }
     }
 }
