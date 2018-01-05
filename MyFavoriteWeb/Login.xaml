@@ -2,7 +2,6 @@
     x:Class="MyFavoriteWeb.Login"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MyFavoriteWeb"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -13,9 +12,9 @@
             <TextBlock HorizontalAlignment="Center" Margin="0,0,0,20">My Favorite Site</TextBlock>
 
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                <TextBox x:Name="txtEmail" PlaceholderText="E-mail"></TextBox>
-                <PasswordBox x:Name="txtSenha" PlaceholderText="Senha" Margin="0,10,0,0"></PasswordBox>
-                <Button Width="250" Margin="0,10,0,0" HorizontalAlignment="Center" Click="Button_Click">Entrar</Button>
+                <TextBox x:Name="txtEmail" PlaceholderText="E-mail" Text="{x:Bind ViewModel.Email, Mode=TwoWay}"></TextBox>
+                <PasswordBox x:Name="txtSenha" PlaceholderText="Senha" Margin="0,10,0,0" Password="{x:Bind ViewModel.Senha, Mode=TwoWay}"></PasswordBox>
+                <Button Width="250" Margin="0,10,0,0" HorizontalAlignment="Center" Click="{x:Bind ViewModel.Logar}">Entrar</Button>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <HyperlinkButton Margin="0,0,30,0" Click="{x:Bind ViewModel.NovoCadastro}">Novo Cadastro</HyperlinkButton>
