@@ -118,6 +118,7 @@
     <Compile Include="ViewModels\BaseModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\SobreViewModel.cs" />
     <Compile Include="Views\CadastroView.xaml.cs">
       <DependentUpon>CadastroView.xaml</DependentUpon>
     </Compile>
