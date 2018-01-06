@@ -1,8 +1,6 @@
-﻿using System;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using MyFavoriteWeb.ViewModels;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace MyFavoriteWeb.Views
 {
@@ -18,15 +16,7 @@ namespace MyFavoriteWeb.Views
 
         private void Login_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel.Initialize();
-        }
-
-        private void imgFoto_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-            var img = sender as Image;
-            var fallbackImage = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.png"));
-            img.Width = 100;
-            img.Source = fallbackImage;
+            ViewModel.Initialize(imgAvatar);
         }
     }
 }

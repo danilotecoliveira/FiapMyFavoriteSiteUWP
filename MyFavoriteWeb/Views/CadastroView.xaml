@@ -17,7 +17,12 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" Padding="15">
             <TextBlock HorizontalAlignment="Center" Margin="0,0,0,20" Style="{StaticResource H1}">Cadastro</TextBlock>
-            <Image Name="imgAvatar" Source="ms-appx:///Assets/profile.png" Width="140" Margin="0,0,0,20"></Image>
+
+            <Ellipse Height="140" Width="140" Name="imgAvatar" Margin="0, 0, 0, 20">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="{x:Bind ViewModel.Avatar, Mode=TwoWay}"></ImageBrush>
+                </Ellipse.Fill>
+            </Ellipse>
 
             <Button Width="40" Background="Transparent" Height="39" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0" BorderThickness="0" Margin="200, -60, 20, 20" Click="{x:Bind ViewModel.AbrirCamera}">
                 <Image Source="ms-appx:///Assets/camera.png" Width="40" Stretch="UniformToFill"></Image>

@@ -34,6 +34,15 @@
             set { senha = value; }
         }
 
+        private static string avatar;
+
+        public static string Avatar
+        {
+            get { return avatar; }
+            set { avatar = value; }
+        }
+
+
         public UsuarioLogado(Usuario usuario)
         {
             if (usuario == null)
@@ -42,6 +51,7 @@
                 email = string.Empty;
                 nome = string.Empty;
                 senha = string.Empty;
+                avatar = string.Empty;
             }
             else
             {
@@ -49,6 +59,7 @@
                 email = usuario.Email;
                 nome = usuario.Nome;
                 senha = usuario.Senha;
+                avatar = usuario.Avatar;
             }
         }
     }

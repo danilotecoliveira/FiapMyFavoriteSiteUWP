@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MyFavoriteWeb.Models
 {
@@ -10,7 +9,6 @@ namespace MyFavoriteWeb.Models
         public string Nome { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }
-
-        //public virtual ICollection<Site> Sites { get; set; }
+        public string Avatar { get; set; }
     }
 }
