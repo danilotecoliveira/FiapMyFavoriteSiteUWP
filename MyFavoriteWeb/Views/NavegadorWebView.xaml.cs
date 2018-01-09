@@ -43,11 +43,13 @@ namespace MyFavoriteWeb.Views
         {
             try
             {
+                var printTela = await Savetoimage();
+
                 using (var context = new MyAppContext())
                 {
                     var site = new Site
                     {
-                        Titulo = webView.Source.ToString(),
+                        Imagem = printTela,
                         Url = webView.Source.ToString(),
                         UsuarioId = UsuarioLogado.Id
                     };
@@ -55,8 +57,6 @@ namespace MyFavoriteWeb.Views
                     context.Sites.Add(site);
                     context.SaveChanges();
                 }
-
-                Savetoimage();
 
                 MessageDialog msg = new MessageDialog($"A página salva com sucesso!", "Página da web");
                 await msg.ShowAsync();
@@ -82,58 +82,55 @@ namespace MyFavoriteWeb.Views
 
         private async Task<WebViewBrush> GetWebViewBrush(WebView webView)
         {
-            // resize width to content
-            double originalWidth = webView.Width;
-            var widthString = await webView.InvokeScriptAsync("eval", new[] { "document.body.scrollWidth.toString()" });
-            int contentWidth;
+            double larguraOriginal = webView.Width;
+            var largura = await webView.InvokeScriptAsync("eval", new[] { "document.body.scrollWidth.toString()" });
+            int conteudoLargura;
 
-            if (!int.TryParse(widthString, out contentWidth))
+            if (!int.TryParse(largura, out conteudoLargura))
             {
-                throw new Exception(string.Format("failure/width:{0}", widthString));
+                throw new Exception(string.Format("failure/width:{0}", largura));
             }
 
-            webView.Width = contentWidth;
+            webView.Width = conteudoLargura;
 
-            // resize height to content
-            double originalHeight = webView.Height;
-            var heightString = await webView.InvokeScriptAsync("eval", new[] { "document.body.scrollHeight.toString()" });
-            int contentHeight;
+            double alturaOriginal = webView.Height;
+            var altura = await webView.InvokeScriptAsync("eval", new[] { "document.body.scrollHeight.toString()" });
+            int conteudoAltura;
 
-            if (!int.TryParse(heightString, out contentHeight))
+            if (!int.TryParse(altura, out conteudoAltura))
             {
-                throw new Exception(string.Format("failure/height:{0}", heightString));
+                throw new Exception(string.Format("failure/height:{0}", altura));
             }
 
-            webView.Height = contentHeight;
+            webView.Height = conteudoAltura;
 
-            // create brush
-            var originalVisibilty = webView.Visibility;
+            var original = webView.Visibility;
             webView.Visibility = Visibility.Visible;
 
-            WebViewBrush brush = new WebViewBrush
+            var webPrint = new WebViewBrush
             {
                 SourceName = webView.Name,
                 Stretch = Stretch.Uniform
             };
 
-            brush.Redraw();
+            webPrint.Redraw();
 
-            // reset, return
-            webView.Width = originalWidth;
-            webView.Height = originalHeight;
-            webView.Visibility = originalVisibilty;
+            webView.Width = larguraOriginal;
+            webView.Height = alturaOriginal;
+            webView.Visibility = original;
 
-            return brush;
+            return webPrint;
         }
 
-        private async void Savetoimage()
+        private async Task<string> Savetoimage()
         {
-            var piclib = KnownFolders.PicturesLibrary;
+            var piclib = ApplicationData.Current.LocalFolder;
             var rect = rectangle as Rectangle;
             var renderbmp = new RenderTargetBitmap();
             await renderbmp.RenderAsync(rect);
             var pixels = await renderbmp.GetPixelsAsync();
-            var file = await piclib.CreateFileAsync("webview.bmp", CreationCollisionOption.GenerateUniqueName);
+            var nomeImagem = $"{Guid.NewGuid()}.bmp";
+            var file = await piclib.CreateFileAsync(nomeImagem, CreationCollisionOption.GenerateUniqueName);
             using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
             {
                 var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, stream);
@@ -141,6 +138,8 @@ namespace MyFavoriteWeb.Views
                 encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, (uint)rect.Width, (uint)rect.Height, 0, 0, bytes);
                 await encoder.FlushAsync();
             }
+
+            return nomeImagem;
         }
     }
 }

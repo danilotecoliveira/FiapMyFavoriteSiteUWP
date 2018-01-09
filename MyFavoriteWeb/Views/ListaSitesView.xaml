@@ -9,14 +9,23 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel>
-            <ListView x:Name="listaSites" Tapped="listaSites_Tapped">
+            <ListView x:Name="listaSites" Tapped="listaSites_Tapped" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Titulo}"></TextBlock>
+                        <StackPanel Orientation="Horizontal" Margin="0, 15, 0, 15">
+                            <Image Source="{Binding Imagem}"></Image>
+                            <TextBlock Text="{Binding Url}" Margin="15, 0, 0, 0" VerticalAlignment="Center"></TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <ListView.Resources>
+                    <MenuFlyout x:Name="sitesCadastrados">
+                        <MenuFlyout.Items>
+                            <MenuFlyoutItem x:Name="Visitar"  Text="Visitar" Click="Visitar_Click" />
+                            <MenuFlyoutItem x:Name="Escluir" Text="Excluir" Click="Remove_Click" />
+                        </MenuFlyout.Items>
+                    </MenuFlyout>
+                </ListView.Resources>
             </ListView>
         </StackPanel>
     </Grid>

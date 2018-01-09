@@ -9,7 +9,7 @@ namespace MyFavoriteWeb.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=MFW123.db");
+            optionsBuilder.UseSqlite("Data Source=MFW3251.db");
         }
     }
 }

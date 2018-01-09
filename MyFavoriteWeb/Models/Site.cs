@@ -6,7 +6,7 @@ namespace MyFavoriteWeb.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Titulo { get; set; }
+        public string Imagem { get; set; }
         public string Url { get; set; }
 
         public int UsuarioId { get; set; }

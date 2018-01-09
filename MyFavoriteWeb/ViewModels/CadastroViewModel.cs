@@ -8,6 +8,7 @@ using Windows.Media.Capture;
 using MyFavoriteWeb.Services;
 using Windows.UI.Xaml.Shapes;
 using Windows.Graphics.Imaging;
+using Windows.Graphics.Display;
 using Windows.UI.Xaml.Media.Imaging;
 using MyFavoriteWeb.Models.Singletons;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -30,10 +31,16 @@ namespace MyFavoriteWeb.ViewModels
                 Nome = UsuarioLogado.Nome;
                 Email = UsuarioLogado.Email;
                 Senha = UsuarioLogado.Senha;
-                Avatar = diretorio.DisplayName + "/" + UsuarioLogado.Avatar;
+                Avatar = PegarAvatar(UsuarioLogado.Avatar);
             }
 
             Ellipse = imgAvatar;
+        }
+
+        private string PegarAvatar(string nomeImagem)
+        {
+            var myfolder = ApplicationData.Current.LocalFolder;
+            return $"{myfolder.Path}/{nomeImagem}";
         }
 
         public Ellipse Ellipse { get; set; }
@@ -89,7 +96,7 @@ namespace MyFavoriteWeb.ViewModels
 
                 NotificationService.ShowToastNotification("Sucesso", "O cadastro foi realizado com sucesso.");
 
-                NavigationService.Navigate<Login>();
+                NavigationService.GoBack();
             }
             catch (Exception ex)
             {
@@ -99,27 +106,22 @@ namespace MyFavoriteWeb.ViewModels
 
         public async void AbrirCamera()
         {
-            var captureUI = new CameraCaptureUI();
-            captureUI.PhotoSettings.AllowCropping = true;
-            captureUI.PhotoSettings.CroppedAspectRatio = new Size(300, 300);
-            captureUI.PhotoSettings.Format = CameraCaptureUIPhotoFormat.Jpeg;
+            var camera = new CameraCaptureUI();
+            camera.PhotoSettings.AllowCropping = true;
+            camera.PhotoSettings.CroppedAspectRatio = new Size(300, 300);
+            camera.PhotoSettings.Format = CameraCaptureUIPhotoFormat.Jpeg;
 
-            storageFile = await captureUI.CaptureFileAsync(CameraCaptureUIMode.Photo);
+            storageFile = await camera.CaptureFileAsync(CameraCaptureUIMode.Photo);
 
-            if (storageFile == null)
-            {
-                //operação cancelada
-            }
-            else
+            if (storageFile != null)
             {
                 using (var stream = await storageFile.OpenReadAsync())
                 {
                     var bitmap = new BitmapImage();
                     await bitmap.SetSourceAsync(stream);
 
-                    ImageBrush ib = new ImageBrush();
-                    ib.ImageSource = bitmap;
-                    Ellipse.Fill = ib;
+                    var imageBrush = new ImageBrush { ImageSource = bitmap };
+                    Ellipse.Fill = imageBrush;
                 }
             }
 
@@ -128,26 +130,24 @@ namespace MyFavoriteWeb.ViewModels
 
         private async void GuardarFoto()
         {
-            try
+            var biblioteca = ApplicationData.Current.LocalFolder;
+            var render = new RenderTargetBitmap();
+            await render.RenderAsync(Ellipse);
+
+            var info = DisplayInformation.GetForCurrentView();
+            var pixels = await render.GetPixelsAsync();
+            var nomeImagem = $"{Guid.NewGuid()}.bmp";
+            avatar = nomeImagem;
+            var arquivo = await biblioteca.CreateFileAsync(nomeImagem, CreationCollisionOption.GenerateUniqueName);
+
+            using (var stream = await arquivo.OpenAsync(FileAccessMode.ReadWrite))
             {
-                var piclib = KnownFolders.PicturesLibrary;
-                RenderTargetBitmap renderbmp = new RenderTargetBitmap();
-                await renderbmp.RenderAsync(Ellipse);
-                var pixels = await renderbmp.GetPixelsAsync();
-                var nomeAvatar = $"{Guid.NewGuid()}.bmp";
-                avatar = nomeAvatar;
-                var file = await piclib.CreateFileAsync(nomeAvatar);
-                using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
-                {
-                    var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, stream);
-                    var bytes = pixels.ToArray();
-                    encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, 140, 140, 0, 0, bytes);
-                    await encoder.FlushAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                //
+                var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, stream);
+                var bytes = pixels.ToArray();
+                encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, (uint)render.PixelWidth, (uint)render.PixelHeight,
+                    info.LogicalDpi,
+                    info.LogicalDpi, bytes);
+                await encoder.FlushAsync();
             }
         }
 

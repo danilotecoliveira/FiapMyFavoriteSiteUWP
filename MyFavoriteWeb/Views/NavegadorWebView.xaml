@@ -12,14 +12,13 @@
             <StackPanel Orientation="Horizontal">
                 <TextBox x:Name="site" Width="200" Height="30" HorizontalAlignment="Stretch" PlaceholderText="ex: www.nomedosite.com.br"></TextBox>
                 <Button Click="Button_Click" Margin="5, 0, 0, 0" Width="46" Height="30">Ir</Button>
-                <!--<Button Click="Button_Click_1">Salvar Página</Button>-->
                 <Button Background="Transparent" Height="60" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0" BorderThickness="0" Margin="5, 0, 0, 0" Click="Button_Click_1">
                     <Image Source="ms-appx:///Assets/favorite.png" Width="42" Stretch="UniformToFill" Margin="0,0,0,10"></Image>
                 </Button>
             </StackPanel>
 
-            <Rectangle x:Name="rectangle" Width="240" Height="360" Margin="-10000 0 0 0"></Rectangle>
-            <WebView x:Name="webView" Source="https://www.google.com.br/" Margin="0 -360 0 0" NavigationCompleted="webView_NavigationCompleted" />
+            <Rectangle x:Name="rectangle" Width="180" Height="120" Margin="-2000 0 0 0"></Rectangle>
+            <WebView x:Name="webView" Source="https://www.google.com.br/" Margin="0 -120 0 0" NavigationCompleted="webView_NavigationCompleted" />
         </StackPanel>
     </Grid>
 </Page>
