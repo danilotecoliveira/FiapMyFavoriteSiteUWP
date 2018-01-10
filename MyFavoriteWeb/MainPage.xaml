@@ -5,20 +5,13 @@
     xmlns:local="using:MyFavoriteWeb"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:converter="using:MyFavoriteWeb.Converters"
     mc:Ignorable="d">
 
-    <!--<Page.Resources>
-        <converter:TypeToObjectConverter x:Key="TypeToObjectConverter" />
-    </Page.Resources>-->
-
     <Grid>
-        <!-- Divisão da página em duas linhas (topo e restante da tela) -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <!-- Definição do topo -->
 
         <StackPanel Height="50" Background="SkyBlue" Orientation="Horizontal">
             <Button x:Name="btnHamburger" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" Background="Transparent" Grid.Row="0" Click="btnHamburger_Click" />

@@ -9,6 +9,16 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <StackPanel>
+                <CommandBar>
+                    <CommandBar.SecondaryCommands>
+                        <AppBarButton Icon="Delete" Label="Apagar todos" />
+                    </CommandBar.SecondaryCommands>
+
+                    <CommandBar.Content>
+                        <TextBlock Text="Mais ações..." Margin="12,14"/>
+                    </CommandBar.Content>
+                </CommandBar>
+                
                 <ListView x:Name="listaSites" Tapped="listaSites_Tapped" ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <ListView.ItemTemplate>
                         <DataTemplate>
