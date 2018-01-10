@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Shapes;
 using Windows.Graphics.Imaging;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Graphics.Display;
 
 namespace MyFavoriteWeb.Views
 {
@@ -127,15 +128,19 @@ namespace MyFavoriteWeb.Views
             var piclib = ApplicationData.Current.LocalFolder;
             var rect = rectangle as Rectangle;
             var renderbmp = new RenderTargetBitmap();
-            await renderbmp.RenderAsync(rect);
-            var pixels = await renderbmp.GetPixelsAsync();
+            await renderbmp.RenderAsync(rectangle);
             var nomeImagem = $"{Guid.NewGuid()}.bmp";
+            var displayInformation = DisplayInformation.GetForCurrentView();
+            var pixels = await renderbmp.GetPixelsAsync();
+
             var file = await piclib.CreateFileAsync(nomeImagem, CreationCollisionOption.GenerateUniqueName);
             using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
             {
                 var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, stream);
                 var bytes = pixels.ToArray();
-                encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, (uint)rect.Width, (uint)rect.Height, 0, 0, bytes);
+                encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, (uint)renderbmp.PixelWidth, (uint)renderbmp.PixelHeight, 
+                    displayInformation.LogicalDpi,
+                    displayInformation.LogicalDpi, bytes);
                 await encoder.FlushAsync();
             }
 

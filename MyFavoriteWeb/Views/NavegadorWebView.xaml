@@ -18,7 +18,7 @@
             </StackPanel>
 
             <Rectangle x:Name="rectangle" Width="180" Height="120" Margin="-2000 0 0 0"></Rectangle>
-            <WebView x:Name="webView" Source="https://www.google.com.br/" Margin="0 -120 0 0" NavigationCompleted="webView_NavigationCompleted" />
+            <WebView x:Name="webView" Margin="0 -120 0 0" NavigationCompleted="webView_NavigationCompleted" />
         </StackPanel>
     </Grid>
 </Page>
