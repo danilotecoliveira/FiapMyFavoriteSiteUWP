@@ -20,7 +20,7 @@
 
             <Ellipse Height="140" Width="140" Name="imgAvatar" Margin="0, 0, 0, 20">
                 <Ellipse.Fill>
-                    <ImageBrush ImageSource="{x:Bind ViewModel.Avatar, Mode=TwoWay}"></ImageBrush>
+                    <ImageBrush ImageSource="{Binding ViewModel.Avatar, Mode=TwoWay}"></ImageBrush>
                 </Ellipse.Fill>
             </Ellipse>
 

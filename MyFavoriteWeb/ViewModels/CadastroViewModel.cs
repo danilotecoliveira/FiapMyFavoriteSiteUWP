@@ -25,22 +25,35 @@ namespace MyFavoriteWeb.ViewModels
 
         public void Initialize(Ellipse imgAvatar)
         {
+            Ellipse = imgAvatar;
+
             if (!string.IsNullOrWhiteSpace(UsuarioLogado.Nome))
             {
                 var diretorio = KnownFolders.PicturesLibrary;
                 Nome = UsuarioLogado.Nome;
                 Email = UsuarioLogado.Email;
                 Senha = UsuarioLogado.Senha;
-                Avatar = PegarAvatar(UsuarioLogado.Avatar);
             }
 
-            Ellipse = imgAvatar;
+            Avatar = PegarAvatar(UsuarioLogado.Avatar);
+
+            var imageBrush = new ImageBrush();
+            var bitmapImage = new BitmapImage();
+            bitmapImage.UriSource = new Uri(Avatar);
+
+            imageBrush.ImageSource = bitmapImage;
+            imgAvatar.Fill = imageBrush;
         }
 
         private string PegarAvatar(string nomeImagem)
         {
-            var myfolder = ApplicationData.Current.LocalFolder;
-            return $"{myfolder.Path}/{nomeImagem}";
+            if (string.IsNullOrWhiteSpace(nomeImagem))
+                return "ms-appx:///Assets/profile.png";
+            else
+            {
+                var myfolder = ApplicationData.Current.LocalFolder;
+                return $"{myfolder.Path}\\{nomeImagem}";
+            }
         }
 
         public Ellipse Ellipse { get; set; }
@@ -65,7 +78,7 @@ namespace MyFavoriteWeb.ViewModels
 
         public string Avatar
         {
-            get { return (string.IsNullOrWhiteSpace(avatar)) ? "ms-appx:///Assets/profile.png" :  avatar; }
+            get { return avatar; }
             set { Set(ref avatar, value); }
         }
 
